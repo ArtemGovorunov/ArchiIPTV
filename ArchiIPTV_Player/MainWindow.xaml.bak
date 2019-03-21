@@ -1,0 +1,77 @@
+﻿<Window x:Class="ArchiIPTV_Player.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:VM="clr-namespace:ArchiIPTV_Player.ViewModel"
+        xmlns:archiiptv_player="clr-namespace:ArchiIPTV_Player"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="170"/>
+            </Grid.ColumnDefinitions>
+            <!--<wpf:VlcPlayer xmlns:wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
+                           
+                           Background="black"
+                           x:Name="vlcPlayer"/>-->
+            <archiiptv_player:MyVLC MediaSource="{Binding SelectedChanel, UpdateSourceTrigger=PropertyChanged}">
+                <archiiptv_player:MyVLC.DataContext>
+                    <VM:ChanelsViewModel/>
+                </archiiptv_player:MyVLC.DataContext>
+            </archiiptv_player:MyVLC>
+            <StackPanel Grid.Column="3">
+                <StackPanel.DataContext>
+                    <VM:ChanelsViewModel/>
+                </StackPanel.DataContext>
+                <TextBox Height="25" Grid.Row="0" Text="{Binding FilterChanel, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label Content="Поиск каналов" Foreground="LightGray" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <ListBox Name="ListBoxChanels"
+                         SelectedItem="{Binding SelectedChanel, Mode=TwoWay}"
+                         ItemsSource="{Binding ChanelCollection}"
+                         >
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Margin="15" Content="text"/>
+            
+        </StackPanel>
+    </Grid>
+</Window>
