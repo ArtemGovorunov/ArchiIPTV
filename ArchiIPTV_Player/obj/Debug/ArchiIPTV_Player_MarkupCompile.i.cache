@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\OneDrive\Документы\Source\CSharp_Repos\ArchiTestApp\ArchiIPTV_Player\obj\Debug\
+C:\Users\ArtemHovorunov\Desktop\ArchiIPTV\ArchiIPTV_Player\obj\Debug\
 ArchiIPTV_Player
 none
 false
 DEBUG;TRACE
-D:\OneDrive\Документы\Source\CSharp_Repos\ArchiTestApp\ArchiIPTV_Player\App.xaml
-21498351028
+C:\Users\ArtemHovorunov\Desktop\ArchiIPTV\ArchiIPTV_Player\App.xaml
+3-302720907
 
-121994133707
-17-363162459
-MainWindow.xaml;MyVLC.xaml;
+15-218872028
+17736566210
+MainWindow.xaml;MyVLC.xaml;SettingsWindow.xaml;
 
-True
+False
 

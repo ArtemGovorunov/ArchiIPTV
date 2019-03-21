@@ -1,0 +1,39 @@
+﻿<Window x:Class="ArchiIPTV_Player.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArchiIPTV_Player"
+        mc:Ignorable="d"
+        Title="Settings" Height="279.135" Width="444.737" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="Images/Archi-Dev.bmp"/>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock Text="Задать плейлист с локального фала"/>
+            <Button Content="Указать файл на ПК" Click="Button_GetFromLocalM3U"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Получить плейлист с интернета"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="http://"/>
+                <TextBox Grid.Column="1" Name="linkUrl" />
+            </Grid>
+            <Button Content="Получить плейлист" Click="Button_GetFromInternetUrl"/>
+
+        </StackPanel>
+        <TextBlock Grid.Row="3" Text="Новые функции скоро... ;)"/>
+        <!--<CheckBox Grid.Row="3" Content="Запускать сервер дистанционного&#x0a; управленияпри запуске приложения" Margin="0,0,0,-11"/>-->
+        <!--<TextBlock Grid.Row="4" Text="ТОДУ добавить бинд вывода IP"/>-->
+    </Grid>
+</Window>

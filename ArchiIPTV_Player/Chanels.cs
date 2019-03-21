@@ -18,37 +18,12 @@ namespace ArchiIPTV_Player
         /// <returns>
         /// Возвращает массив обьектов типа Chanel
         /// </returns>
-        public static List<Chanel> GetChanelsFromFile_m3u()
+        public static List<Chanel> GetChanelsFromM3U(string source)
         {
-
-            string linkUrl = "tv.lan.ua";
+            
             string result = string.Empty;
-
-            WebClient client = new WebClient();
-            try
-            {
-                using (Stream stream = client.OpenRead("http://" + linkUrl))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                        result = reader.ReadToEnd();
-                }
-                if (!string.IsNullOrEmpty(result))
-                {
-                    Properties.Settings.Default.M3UFile = result;
-                    Properties.Settings.Default.Save();
-                }
-                else
-                {
-                    throw new Exception();
-                }
-
-            }
-            catch
-            {
-                throw new Exception();
-            }
-
-            string source = Properties.Settings.Default.M3UFile;
+            
+            //string source = Properties.Settings.Default.M3UFile;
             //Создаем массив строк разбивая входную строку по переносам строки
             string[] lines = source.Split(new string[] { "\n", "\r", "\n\r", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             //Инициализируем список в который будем записывать каналы

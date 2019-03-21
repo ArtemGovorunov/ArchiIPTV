@@ -28,14 +28,14 @@ namespace ArchiIPTV_Player
             
         }
         
-        public string MediaSource
+        public Chanel MediaSource
         {
-            get { return (string)GetValue(MediaSourceProperty); }
+            get { return (Chanel)GetValue(MediaSourceProperty); }
             set { SetValue(MediaSourceProperty, value); }
         }
 
         public static readonly DependencyProperty MediaSourceProperty =
-            DependencyProperty.Register("MediaSource", typeof(string), typeof(MyVLC), new PropertyMetadata("",new PropertyChangedCallback(MediaSourcePropertyChangedCallback)));
+            DependencyProperty.Register("MediaSource", typeof(Chanel), typeof(MyVLC), new PropertyMetadata(null,new PropertyChangedCallback(MediaSourcePropertyChangedCallback)));
 
         private static void MediaSourcePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -48,10 +48,10 @@ namespace ArchiIPTV_Player
         
         private void OnMediaSourcePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            if ((string)e.NewValue != "")
+            if ((Chanel)e.NewValue != null)
             {
-                this.State = Meta.Vlc.MediaState.Playing;
-                vlcPlayer.LoadMedia(MediaSource);
+                //this.State = Meta.Vlc.MediaState.Playing;
+                vlcPlayer.LoadMedia(MediaSource.Adress);
                 vlcPlayer.Play();
             }
 
@@ -84,7 +84,7 @@ namespace ArchiIPTV_Player
         }
 
         
-
+        /*
         public bool MuteStatus
         {
             get { return (bool)GetValue(MuteProperty); }
@@ -97,7 +97,7 @@ namespace ArchiIPTV_Player
 
         
 
-
+        /*
 
         public Meta.Vlc.MediaState State
         {
@@ -136,6 +136,20 @@ namespace ArchiIPTV_Player
                     break;
 
             }
+        }*/
+
+        public void Play()
+        {
+            vlcPlayer.Play();
+        }
+        public void Stop()
+        {
+            vlcPlayer.Stop();
+        }
+
+        public void Mute()
+        {
+            vlcPlayer.ToggleMute();
         }
 
         ~MyVLC()

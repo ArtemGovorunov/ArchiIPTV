@@ -12,20 +12,35 @@
         
         
         >
-
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
-            <Setter Property="Margin" Value="10" />
+            <Setter Property="Margin" Value="0" />
             <Setter Property="Width" Value="50" />
             <Setter Property="Height" Value="50"/>
             <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Rectangle x:Name="background"
+                                   Fill="{TemplateBinding Background}"/>
+                                <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <VM:ApplicationViewModel/>
-    </Window.DataContext>
-    <Grid ShowGridLines="True">
+    <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
@@ -40,14 +55,24 @@
                            
                            Background="black"
                            x:Name="vlcPlayer"/>-->
-                <archiiptv_player:MyVLC 
-                    MediaSource="{Binding SelectedChanel.Adress, UpdateSourceTrigger=PropertyChanged}"
+            <archiiptv_player:MyVLC x:Name="myVLC"
+                    MediaSource="{Binding ElementName=ListBoxChanels, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                     Volume="{Binding ElementName=SliderVolume, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                    
-                    />
+                    MouseLeftButtonDown="MyVLC_MouseLeftButtonDown"
+                    >
+                <archiiptv_player:MyVLC.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem IsCheckable="True" Header="Поверх всех окон" Click="VlcMenuTopScreen_Click"/>
+                    </ContextMenu>
+                </archiiptv_player:MyVLC.ContextMenu>
+            </archiiptv_player:MyVLC>
+            <GridSplitter Name="PlaylistSplitter" Grid.Column="1" ShowsPreview="False" Width="3"
+        HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
 
-
-                <Grid Grid.Column="3">
+            <Grid Grid.Column="3" Name="PlaylistPanel">
+                <Grid.DataContext>
+                    <VM:ChanelsViewModel/>
+                </Grid.DataContext>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -78,7 +103,7 @@
                 </TextBox>
                 <ListBox Name="ListBoxChanels"
                          Grid.Row="1"
-                                 ItemsSource="{Binding ChanelCollection}"
+                                 ItemsSource="{Binding ChanelCollection, Mode=TwoWay}"
                                  SelectedItem="{Binding SelectedChanel}"
                                  SelectedIndex="{Binding SelectedIndex}"
                                  SelectionMode="Single"
@@ -93,20 +118,28 @@
 
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Name="DownPanel" HorizontalAlignment="Left">
-            <Button Content="&#xE768;" />
-            <Button Content="&#xE71A;" />
-            <Button Content="&#xE767;"/>
+        <Grid Grid.Row="1" Name="ButtomPanel">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <GradientStop Color="Blue" Offset="0"></GradientStop>
+                    <GradientStop Color="Transparent" Offset="1"></GradientStop>
+                </LinearGradientBrush>
+            </Grid.Background>
+        <StackPanel Orientation="Horizontal" Name="DownPanel" HorizontalAlignment="Left">
+            <Button Content="&#xE768;" Command="{Binding MediaCommand}" CommandParameter="Play"/>
+            <Button Content="&#xE71A;" Command="{Binding MediaCommand}" CommandParameter="Stop"/>
+            <Button Content="&#xE767;" Command="{Binding MediaCommand}" CommandParameter="Mute"/>
             <Slider Name="SliderVolume"
                     VerticalAlignment="Center" Width="150"
                     Minimum="0" Maximum="100" Value="100"
                     SmallChange="5"
                     />
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <!--<Button Content="&#xE713;"/>-->
-            <Button Content="&#xE740;"/>
-            <Button Content="&#xEA37;"/>
-        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="&#xE713;" Name="SettingsButton" Click="SettingsButton_Click"/>
+                <Button Content="&#xE740;" Name="FullScreenButton" Click="ButtonFullscreen_Click"/>
+                <Button Content="&#xEA37;" Click="ButtonPlaylist_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
